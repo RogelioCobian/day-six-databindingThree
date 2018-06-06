@@ -1,10 +1,53 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+ class Person {
+  // name: string;
+  // gender: string;
+  // rating: number;
+  constructor( public name: string, public gender: string, public rating: number) {
+    // name = this.name;
+    // gender = this.gender;
+    // rating = this.rating;
+  }
+}
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'app';
+  male = new Person('John Doe', 'm', 4.5);
+  female = new Person('Jane Doe', 'f', 5);
+
+  person;
+
+  ngOnInit() {
+    this.pickRandomPerson();
+  }
+
+  pickRandomPerson() {
+    const index = Math.floor(Math.random() * 2 );
+    if (!index) {
+      this.person = this.female;
+    } else {
+      this.person = this.male;
+    }
+    console.log(this.person);
+  }
+
+  getName() {
+    return `Name: ${this.person.name}`;
+  }
+
+  switchPerson() {
+    if (this.person.gender === 'f') {
+      this.person = this.male;
+    } else if (this.person.gender === 'm') {
+      this.person = this.female;
+    } else {
+      this.pickRandomPerson();
+    }
+  }
 }
